@@ -10,23 +10,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 @Configuration
-
 public class WebClientConfig {
-    @Value("${serviceUrl}")
-    private String serviceUrl;
+  @Value("${serviceUrl}")
+  private String serviceUrl;
 
-    @Bean
-    WebClient webClient(WebClient.Builder builder) {
-        HttpClient httpClient = HttpClient.create()
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1_000) // millis
-                .doOnConnected(connection ->
-                        connection
-                                .addHandlerLast(new ReadTimeoutHandler(1))); // seconds
+  @Bean
+  WebClient webClient(WebClient.Builder builder) {
+    HttpClient httpClient =
+        HttpClient.create()
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1_000) // millis
+            .doOnConnected(
+                connection -> connection.addHandlerLast(new ReadTimeoutHandler(1))); // seconds
 
-        return builder
-                .baseUrl(serviceUrl)
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .build();
-    }
-
+    return builder
+        .baseUrl(serviceUrl)
+        .clientConnector(new ReactorClientHttpConnector(httpClient))
+        .build();
+  }
 }
