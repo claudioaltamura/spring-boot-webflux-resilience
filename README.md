@@ -7,3 +7,4 @@ Spring Boot Webflux resilience examples
 
 - retry example
 - cache example
+- delay example
