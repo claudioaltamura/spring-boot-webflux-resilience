@@ -1,11 +1,10 @@
 package de.claudioaltamura.spring.boot.webflux.resilience.service;
 
 import de.claudioaltamura.spring.boot.webflux.resilience.model.Superhero;
+import java.time.Duration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 @Service
 public class CacheService {
@@ -24,6 +23,6 @@ public class CacheService {
         .uri(uriBuilder -> uriBuilder.path("/superheroes").queryParam("city", city).build())
         .retrieve()
         .bodyToMono(Superhero.class)
-            .cache(cacheTTL);
+        .cache(cacheTTL);
   }
 }
